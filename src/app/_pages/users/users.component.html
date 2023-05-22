@@ -1,1 +1,49 @@
-<p>users works!</p>
+<div class="container vh-100 p-3">
+    <div class="border h-100">
+        <h1 class="display-6 mb-0 mx-3 mt-3">User Management</h1>
+        <hr>
+        <ng-container *ngIf="(isLoading$ | async); else dataLoaded">
+            <div class="d-flex align-items-center justify-content-center h-100">
+                <strong class="me-2 fs-3">Loading...</strong>
+                <div class="spinner-border spinner-border-lg ms-2" role="status" aria-hidden="true"></div>
+            </div>
+        </ng-container>
+        <ng-template #dataLoaded>
+            <div class="table-responsive ms-3 pe-3 overflow-y-auto" style="height: 90%;">
+                <table class="table table-striped table-warning table-bordered border-dark mb-0">
+                    <thead>
+                        <tr>
+                            <td width="20"></td>
+                            <td>First Name</td>
+                            <td>Maiden Name</td>
+                            <td>Last Name</td>
+                            <td>Email</td>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <ng-container *ngFor="let user of users$ | async">
+                            <tr>
+                                <td>
+                                    <span class="material-icons"
+                                        *ngIf="(selectedUserId$ | async) === user.id; else arrow_down">arrow_drop_up</span>
+                                    <ng-template #arrow_down>
+                                        <span class="material-icons">arrow_drop_down</span>
+                                    </ng-template>
+                                </td>
+                                <td>{{ user.firstName }}</td>
+                                <td>{{ user.maidenName }}</td>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                            <!-- <tr *ngIf="(selectedUserId$ | async) === user.id">
+                            <td colspan="9999">
+                                <app-update-user [user]="user"></app-update-user>
+                            </td>
+                        </tr> -->
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </ng-template>
+    </div>
+</div>
