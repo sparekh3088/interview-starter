@@ -11,4 +11,8 @@ export class UsersService {
   loadUsers() {
     return this.http.get<Response>(this.serviceBaseCall);
   }
+
+  editUser(userId: number, user: any) {
+    return this.http.put(`${this.serviceBaseCall}/${userId}`, user);
+  }
 }

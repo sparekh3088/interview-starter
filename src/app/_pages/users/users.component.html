@@ -10,7 +10,7 @@
         </ng-container>
         <ng-template #dataLoaded>
             <div class="table-responsive ms-3 pe-3 overflow-y-auto" style="height: 90%;">
-                <table class="table table-striped table-warning table-bordered border-dark mb-0">
+                <table class="table table-striped table-warning table-bordered border-dark mb-0 align-middle">
                     <thead>
                         <tr>
                             <td width="20"></td>
@@ -24,10 +24,11 @@
                         <ng-container *ngFor="let user of users$ | async">
                             <tr>
                                 <td>
-                                    <span class="material-icons"
+                                    <span (click)="selectUserForEdit(null)" class="material-icons"
                                         *ngIf="(selectedUserId$ | async) === user.id; else arrow_down">arrow_drop_up</span>
                                     <ng-template #arrow_down>
-                                        <span class="material-icons">arrow_drop_down</span>
+                                        <span (click)="selectUserForEdit(user.id)"
+                                            class="material-icons">arrow_drop_down</span>
                                     </ng-template>
                                 </td>
                                 <td>{{ user.firstName }}</td>
@@ -35,11 +36,11 @@
                                 <td>{{ user.lastName }}</td>
                                 <td>{{ user.email }}</td>
                             </tr>
-                            <!-- <tr *ngIf="(selectedUserId$ | async) === user.id">
-                            <td colspan="9999">
-                                <app-update-user [user]="user"></app-update-user>
-                            </td>
-                        </tr> -->
+                            <tr *ngIf="(selectedUserId$ | async) === user.id">
+                                <td colspan="9999">
+                                    <app-update-user [user]="user"></app-update-user>
+                                </td>
+                            </tr>
                         </ng-container>
                     </tbody>
                 </table>

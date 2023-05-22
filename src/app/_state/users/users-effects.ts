@@ -21,4 +21,17 @@ export class UsersEffects {
       )
     );
   });
+
+  editUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UsersActions.editUser),
+      exhaustMap((action: any) =>
+        this.usersService.editUser(action.user.id, action.user).pipe(
+          map((response: any) => {
+            return UsersActions.editUserSuccess({ user: response });
+          })
+        )
+      )
+    );
+  });
 }
